@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">rpgGames</string>
+    <string name="skeleton">skeleton</string>
+    <string name="_200hp">200HP</string>
+    <string name="clebinho_da_regulagem">Clebinho da regulagem</string>
+    <string name="icon">icon</string>
+</resources>
