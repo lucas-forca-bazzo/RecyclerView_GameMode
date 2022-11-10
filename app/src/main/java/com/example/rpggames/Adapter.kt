@@ -5,8 +5,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.rpggames.databinding.CharacterCardBinding
 
-class Adapter : RecyclerView.Adapter<Adapter.CharacterViewHolder>() {
+class Adapter(private val listener:Listener) : RecyclerView.Adapter<Adapter.CharacterViewHolder>() {
     private var listOfCharacters: List<CharacterAttributes> = listOf()
+
 
     fun setData(list: List<CharacterAttributes>) {
         listOfCharacters = list
@@ -22,28 +23,27 @@ class Adapter : RecyclerView.Adapter<Adapter.CharacterViewHolder>() {
 
     override fun onBindViewHolder(holder: CharacterViewHolder, position: Int) {
         val listUpdated: CharacterAttributes = listOfCharacters[position]
-        holder.bind(listUpdated)
+        holder.bind(listUpdated, position)
 
     }
 
     override fun getItemCount(): Int = listOfCharacters.size
 
-
-    interface ClickAttack{
-        fun clickAttack{}
-
+    interface Listener{
+        fun listener(position: Int)
     }
+
 
     inner class CharacterViewHolder(val binding: CharacterCardBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(listOfCharacters: CharacterAttributes) {
+        fun bind(listOfCharacters: CharacterAttributes, position: Int) {
 
             binding.tvCharacterName.text = listOfCharacters.name
             binding.tvCharacterHp.text = listOfCharacters.hp.toString()
             val defense: Int = listOfCharacters.defense
             binding.ivCharacterCardIcon.setImageResource(listOfCharacters.vocation)
-
+            binding.clCharacterCardContainer.setOnClickListener{listener.listener(position)}
         }
     }
 

@@ -17,48 +17,53 @@ class MainActivity : AppCompatActivity() {
         val recyclerViewCharacters: RecyclerView =
             binding.rvActivityMainCharacters //pega o modelo pelo binding
 
-        adapter = Adapter() //inicializa a instancia de Adapter criada
+        adapter = Adapter(object: Adapter.Listener{
+            override fun listener(position:Int) {
+                if(list[position].defense > 30) return
+                list[position].hp = (list[position].hp) - (30 - list[position].defense)
+                adapter.setData(list)
+            }
+
+        }) //inicializa a instancia de Adapter criada
 
         recyclerViewCharacters.layoutManager = LinearLayoutManager(
             this,
             LinearLayoutManager.VERTICAL,
             false
         ) //define o modelo de lista
-
         recyclerViewCharacters.setHasFixedSize(true) //da mais desempenho na lista
-
         recyclerViewCharacters.adapter = adapter //vinculando o adapter ao recyclerview criado
-
         adapter.setData(list) //Passo os dados pra o adapter
+
     }
 
-    val list = listOf<CharacterAttributes>(
+    val list = mutableListOf<CharacterAttributes>(
         CharacterAttributes(
-            name = "Big Felipe",
+            name = "Big ",
             vocation = R.drawable.mage,
             hp = 500,
             defense = 10
 
         ),
         CharacterAttributes(
-            name = "Big Felipe",
+            name = "Felipe",
             vocation = R.drawable.necromancer,
             hp = 500,
-            defense = 10
+            defense = 20
         ),
 
         CharacterAttributes(
             name = "Big Felipe",
             vocation = R.drawable.imageswarrior,
             hp = 500,
-            defense = 10
+            defense = 30
         ),
 
         CharacterAttributes(
             name = "Big Felipe",
             vocation = R.drawable.archer,
             hp = 500,
-            defense = 10
+            defense = 40
         ),
         CharacterAttributes(
             name = "Big Felipe",
